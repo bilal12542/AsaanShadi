@@ -6,13 +6,17 @@
 {% block body %}
 {% load static %}
 
-<div>
-
-<form method="POST" enctype="multipart/form-data">
+<div class="container">
+    <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+<form method="POST" enctype="multipart/form-data" class="form-group">
 
     {% csrf_token %}
-    <label for="User_ID" >User Id: </label>
-    <input id="User_ID" type="text" name="{{ form.user_id.html_name }}" value="{{request.user.id}}"><br>
+    <div class="col">
+        <div class="col-lg-6">
+            <label for="User_ID" > <b> User Id: </b></label>
+    <input id="User_ID" type="text" name="{{ form.user_id.html_name }}" value="{{request.user.id}}">
 
 {% if form.user_id.errors %}
 
@@ -26,14 +30,14 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
+</div>
 
 
+<div class="col-lg-6">
+    <label for="company_name"> <b> Company Name: </b></label>
 
-
-<label for="company_name">Company Name: </label>
-
-<input id="company_name" type="text" name="{{ form.company_name.html_name }}" value=""><br>
+<input id="company_name" type="text" name="{{ form.company_name.html_name }}" value="">
 
 {% if form.company_name.errors %}
 
@@ -47,13 +51,12 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
+</div>
+        <div class="col-lg-6">
+<label for="Location"> <b>Location: </b></label>
 
-<label for="Location">location: </label>
-
-<input id="location" type="text" name="{{ form.location.html_name }}"><br>
-
-<br>
+<input id="location" type="text" name="{{ form.location.html_name }}">
 
 {% if form.location.errors %}
 
@@ -67,13 +70,14 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
+        </div>
+        <div class="col-lg-6">
+    <label for="contact_no"><b> Contact Number: </b></label>
 
-    <label for="contact_no">Contact Number: </label>
+<input id="contact_no" type="text" name="{{ form.contact_no.html_name }}">
 
-<input id="contact_no" type="text" name="{{ form.contact_no.html_name }}"><br>
 
-<br>
 
 {% if form.contact_no.errors %}
 
@@ -87,14 +91,14 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
 
+        </div>
+        <div class="col-lg-6">
+    <label for="desc"><b> Desc: </b> </label>
 
-    <label for="desc">Desc: </label>
+<textarea id="desc" name="{{ form.desc.html_name }}"></textarea>
 
-<textarea id="desc" name="{{ form.desc.html_name }}"></textarea><br>
-
-<br>
 
 {% if form.desc.errors %}
 
@@ -108,10 +112,11 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
+        </div>
+        <div class="col-lg-6">
 
-
-<label for="package">package: </label>
+<label for="package"> <b> Package: </b></label>
     <a href="add_Package" class="btn btn-primary" >Add New Package</a>
 
 <select  class="form-control mb-4" name="{{ form.package.html_name }}">
@@ -124,7 +129,7 @@
 
 {% endfor %}
 
-</select><br>
+</select>
 
 {% if form.package.errors %}
 
@@ -138,11 +143,12 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
 
+        </div>
+        <div class="col-lg-6">
 
-
-<label for="category">Category: </label>
+<label for="category"> <b>Category: </b></label>
     <a href="add_Category" class="btn btn-primary" >Add New Category</a>
 
 <select  class="form-control mb-4" name="{{ form.category.html_name }}">
@@ -155,7 +161,7 @@
 
 {% endfor %}
 
-</select><br>
+</select>
 
 
 {% if form.category.errors %}
@@ -170,14 +176,15 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
+        </div>
+        <div class="col-lg-6">
+
+    <label for="Image"><b> Please Choose your Image: </b></label>
+
+<input  id="Image" type="file" accept="image/*" name="{{ form.image.html_name }} "  >
 
 
-    <label for="Image">Please Choose your Image: </label>
-
-<input  id="Image" type="file" accept="image/*" name="{{ form.image.html_name }} "  ><br>
-
-<br>
 
 {% if form.image.errors %}
 
@@ -191,17 +198,20 @@
 
 </ol>
 
-{% endif %}<br>
+{% endif %}
 
-
+        </div> <br>
 
 
 <!--    &lt;!&ndash; Using the formset &ndash;&gt;-->
 <!--    {{ form.as_p }}-->
 
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" class="btn btn-primary btn btn-block">
+        </div>
 </form>
-
+</div>
+    <div class="col-lg-3"></div>
+</div>
     </div>
 
 {% endblock %}

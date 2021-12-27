@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect , get_object_or_404
 from .models import ServiceProvider, Category
 from .forms import ServiceForm, CategoryForm , PackageForm
 from django.contrib import messages
@@ -17,8 +17,41 @@ def catering(request):
     cat = Category.objects.get(category="Catering")
     context = {}
     context["dataset"] = ServiceProvider.objects.filter(category=cat.id)
+    print(context)
 
     return render(request, 'service_provider/catering.html',context)
+
+def detail_catering(request, id):
+    context = {}
+    cat = Category.objects.get(category="Catering")
+    cat_service = ServiceProvider.objects.filter(category=cat.id)
+    context["data"] = cat_service.get(id=id)
+
+
+    # add the dictionary during initialization
+
+    return render(request, "service_provider/detail_view.html", context)
+
+
+def catering_delete_view(request, id):
+    # dictionary for initial data with
+    # field names as keys
+    context = {}
+
+    # fetch the object related to passed id
+    cat = Category.objects.get(category="Catering")
+    cat_service = ServiceProvider.objects.filter(category=cat.id)
+    obj = get_object_or_404(cat_service, id=id)
+
+    if request.method == "POST":
+        # delete object
+        obj.delete()
+        # after deleting redirect to
+        # home page
+        return redirect("catering")
+
+    return render(request, "service_provider/delete_view.html", context)
+
 
 def decorations(request):
     cat = Category.objects.get(category="Decorations")
