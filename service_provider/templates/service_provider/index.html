@@ -7,5 +7,18 @@
 
 <h1>  I'm Home page</h1>
 
-{{data}}
+
+<div class="main">
+{% for data in dataset %}
+    {{ data.company_name }} <br/>
+     <img src= "/media/{{ data.image }}" width="150" height="100" > <br>
+
+    <hr/>
+
+
+
+    {% endfor %}
+
+</div>
+
 {% endblock %}
