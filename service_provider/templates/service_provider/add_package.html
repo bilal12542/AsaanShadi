@@ -1,0 +1,22 @@
+
+{% extends 'service_provider/base.html' %}
+{% block title%} AsaanShadi - Best Shadi Website{% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+{% load static %}
+
+<!--{{form}}-->
+
+
+<form method="POST" enctype="multipart/form-data">
+
+    <!-- Security token -->
+    {% csrf_token %}
+
+    <!-- Using the formset -->
+    {{ form.as_p }}
+    <a href="service_provider/add_Service.html"><input  type="submit" value="Next"></a>
+</form>
+
+{% endblock %}

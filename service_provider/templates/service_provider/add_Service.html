@@ -1,0 +1,207 @@
+
+{% extends 'service_provider/base.html' %}
+{% block title%} AsaanShadi - Best Shadi Website{% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+{% load static %}
+
+<div>
+
+<form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    <label for="User_ID" >User Id: </label>
+    <input id="User_ID" type="text" name="{{ form.user_id.html_name }}" value="{{request.user.id}}"><br>
+
+{% if form.user_id.errors %}
+
+<ol>
+
+{% for error in form.user_id.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+
+
+
+<label for="company_name">Company Name: </label>
+
+<input id="company_name" type="text" name="{{ form.company_name.html_name }}" value=""><br>
+
+{% if form.company_name.errors %}
+
+<ol>
+
+{% for error in form.company_name.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+<label for="Location">location: </label>
+
+<input id="location" type="text" name="{{ form.location.html_name }}"><br>
+
+<br>
+
+{% if form.location.errors %}
+
+<ol>
+
+{% for error in form.location.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+    <label for="contact_no">Contact Number: </label>
+
+<input id="contact_no" type="text" name="{{ form.contact_no.html_name }}"><br>
+
+<br>
+
+{% if form.contact_no.errors %}
+
+<ol>
+
+{% for error in form.contact_no.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+
+    <label for="desc">Desc: </label>
+
+<textarea id="desc" name="{{ form.desc.html_name }}"></textarea><br>
+
+<br>
+
+{% if form.desc.errors %}
+
+<ol>
+
+{% for error in form.desc.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+
+<label for="package">package: </label>
+    <a href="add_Package" class="btn btn-primary" >Add New Package</a>
+
+<select  class="form-control mb-4" name="{{ form.package.html_name }}">
+
+<option selected disabled>Select Category</option>
+
+{% for cat in form.package %}
+
+{{ cat }}
+
+{% endfor %}
+
+</select><br>
+
+{% if form.package.errors %}
+
+<ol>
+
+{% for error in form.package.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+
+
+<label for="category">Category: </label>
+    <a href="add_Category" class="btn btn-primary" >Add New Category</a>
+
+<select  class="form-control mb-4" name="{{ form.category.html_name }}">
+
+<option selected disabled>Select Category</option>
+
+{% for cat in form.category %}
+
+{{ cat }}
+
+{% endfor %}
+
+</select><br>
+
+
+{% if form.category.errors %}
+
+<ol>
+
+{% for error in form.category.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+
+    <label for="Image">Please Choose your Image: </label>
+
+<input  id="Image" type="file" accept="image/*" name="{{ form.image.html_name }} "  ><br>
+
+<br>
+
+{% if form.image.errors %}
+
+<ol>
+
+{% for error in form.image.errors %}
+
+<li><strong>{{ error|escape }}</strong></li>
+
+{% endfor %}
+
+</ol>
+
+{% endif %}<br>
+
+
+
+
+<!--    &lt;!&ndash; Using the formset &ndash;&gt;-->
+<!--    {{ form.as_p }}-->
+
+    <input type="submit" value="Submit">
+</form>
+
+    </div>
+
+{% endblock %}
