@@ -1,0 +1,16 @@
+{% extends 'service_provider/base.html' %}
+{% block title%} AsaanShadi - Best Shadi Website{% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+{% load static %}
+
+<div class="main">
+
+    <!-- Specify fields to be displayed -->
+    {{ data.company_name }}<br/>
+    {{ data.desc }}<br/>
+    <img src= "/media/{{ data.image }}" > <br/>
+
+</div>
+{% endblock %}

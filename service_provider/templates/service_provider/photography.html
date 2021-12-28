@@ -1,0 +1,30 @@
+{% extends 'service_provider/base.html' %}
+{% block title%} AsaanShadi - Best Shadi Website{% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+{% load static %}
+
+<h1>  Photography page</h1>
+<button  type="button" class="btn btn-primary" onclick="location.href='{% url 'ServiceAdd' %}'">Add</button>
+
+
+<div class="main">
+{% for data in dataset %}
+    {{ data.company_name }} <br/>
+     <img src= "/media/{{ data.image }}" width="150" height="100" > <br>
+    <button data-product="{{ data.id }}" class="btn btn-outline-secondary">
+        <a href="{% url 'detail-photography' data.id %}">View Details</a>
+    </button>
+    <button type="button" class="btn btn-danger"   onclick="location.href= '{% url 'delete-photography' data.id %}'" > Delete
+
+    </button>
+    <button type="button" class="btn btn-warning" onclick="location.href= '{% url 'update-catering' data.id %}'" >Update</button>
+    <hr/>
+
+
+
+    {% endfor %}
+
+</div>
+{% endblock %}
