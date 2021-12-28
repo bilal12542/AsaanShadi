@@ -2,32 +2,44 @@
 
 {% block body %}
 <div class="box">
-        <h2 class="is-size-3 mb-4">My products</h2>
+    <h2 class="is-size-3 mb-4">My products</h2>
 
-        <a href="{% url 'add-product' %}" class="button is-dark is-uppercase mb-6">Add product</a>
+    <a href="{% url 'add-product' %}" class="button is-dark is-uppercase mb-6">Add product</a>
 
-        {% if products %}
-            <table class="table is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
+    {% if products %}
+    <table class="table is-fullwidth">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>View/Edit/Delete</th>
+        </tr>
+        </thead>
 
-                <tbody>
-                    {% for product in products %}
-                        <tr>
-                            <td><a href="{% url 'single-product' product.category.slug product.slug %}">{{ product.title }}</a></td>
-                            <td>{{ product.quantity }}</td>
-                            <td>Rs. {{ product.price }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>You don't have any products yet...</p>
-        {% endif %}
-    </div>
+        <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.title }}</a></td>
+            <td>{{ product.quantity }}</td>
+            <td>Rs. {{ product.price }}</td>
+            <td>
+                <a href="{% url 'single-product' product.category.slug product.slug %}">
+                <button>View</button>
+                </a>
+                <a href="{% url 'edit-product' product.category.slug product.slug %}">
+                <button>Edit</button>
+                </a>
+                <a href="{% url 'delete-product' product.category.slug product.slug %}">
+                <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You don't have any products yet...</p>
+    {% endif %}
+</div>
 {% endblock %}
