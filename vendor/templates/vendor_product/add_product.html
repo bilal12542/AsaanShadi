@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body %}
+<hr>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ formset.management_form }}
+    {% for frm in formset %}
+        {{ frm }}
+    {% endfor %}<br><br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
