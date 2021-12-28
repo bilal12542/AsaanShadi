@@ -112,4 +112,32 @@ def single_product(request, category_slug, product_slug):
     if len(similar_products) >= 4:
         similar_products = random.sample(similar_products, 4)
 
-    return render(request, 'vendor_product/single_product.html', {'product': product, 'similar_products': similar_products})
+    return render(request, 'vendor_product/single_product.html',
+                  {'product': product, 'similar_products': similar_products})
+
+
+def edit_product(request, category_slug, product_slug):
+    product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
+    # create a form instance and populate it with data from the request:
+    form = AddProduct(request.POST or None, request.FILES or None, instance=product)
+    # check whether it's valid:
+    if form.is_valid():
+        # process the data in form.cleaned_data as required
+        # ...
+        post_form = form.save(commit=False)
+        post_form.vendor = request.user.vendor
+        post_form.slug = slugify(post_form.title)
+        post_form.save()
+        # redirect to a new URL:
+        return redirect("view-product")
+    else:
+        print(form.errors)
+    # if a GET (or any other method) we'll create a blank form
+
+    return render(request, 'vendor_product/edit_product.html', {'form': form})
+
+
+def delete_product(request, category_slug, product_slug):
+    product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
+    product.delete()
+    return redirect('view-product')
