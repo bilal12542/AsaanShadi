@@ -7,10 +7,32 @@
 
 <div class="main">
 
-    <!-- Specify fields to be displayed -->
-    {{ data.company_name }}<br/>
-    {{ data.desc }}<br/>
-    <img src= "/media/{{ data.image }}" > <br/>
+    <div class="container my-4">
+    <div class="row">
+    <div class="col-md-4">
+        <h1> {{ data.company_name }}<br/></h1>
+    <div class="row">
+        <img src="/media/{{data.image}}" width="100px" height="150px">
+    </div>
+
+
+    </div>
+
+    <div class="col-md-8">
+        <h5>Location: {{ data.location }}<br/></h5>
+        <p><b> {{ data.package }}: Rs.{{data.package.price}} </b></p>
+        <p>{{ data.desc }}<br/></p>
+        <p><b> Contact Us: </b> {{ data.contact_no }}<br/></p>
+
+
+    </div>
+    </div>
+
+
+</div>
+
+
+
 
 </div>
 {% endblock %}

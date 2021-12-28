@@ -5,12 +5,12 @@
 {% block body %}
 {% load static %}
 
-<h1>  I'm Home page</h1>
+<h1>  Welcome To AsaanShadi</h1>
 
 
 <div class="main">
 {% for data in dataset %}
-    {{ data.company_name }} <br/>
+    <b>{{ data.company_name }} </b> <br/>
      <img src= "/media/{{ data.image }}" width="150" height="100" > <br>
 
     <hr/>
