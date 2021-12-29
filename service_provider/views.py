@@ -1,15 +1,80 @@
 from django.shortcuts import render, redirect , get_object_or_404
-from .models import ServiceProvider, Category
+from .models import ServiceProvider, Category , Become_ServiceProvider
 from .forms import ServiceForm, CategoryForm , PackageForm
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
+def user_login(request):
+    if request.user.is_authenticated:
+        print(request.user)
+        return redirect('HomePage')
+    elif request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('HomePage')
+
+            else:
+                print("Someone tried to login and failed.")
+                return redirect('/')
+        except Exception as identifier:
+            print(identifier)
+            return redirect('/')
+
+    else:
+        return render(request, 'ServiceProvider_login/login.html')
+
+@login_required
+def logout_vendor(request):
+    logout(request)
+    return redirect('login')
+
+
+def become_ServiceProvider(request):
+    if request.user.is_authenticated:
+        return redirect('HomePage')
+    elif request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            serviceprovider = Become_ServiceProvider.objects.create(owner_name=user.username, created_by=user)
+            serviceprovider.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'ServiceProvider_login/become_serviceprovider.html', {'form': form})
+
+
+@login_required(login_url='login')
 def index(request):
     context = {}
     context["dataset"] = ServiceProvider.objects.all()
     print(context)
     return render(request, 'service_provider/index.html', context)
+
+def details(request, id):
+    context = {}
+    # cat =
+    # cat_service = ServiceProvider.objects.filter(category=cat.id)
+    context["data"] = ServiceProvider.objects.filter(id=id)
+    a = ServiceProvider.objects.filter(id=id)
+    print(a)
+    # for i in a:
+    #     print(i.location)
+    #print(a.location)
+
+
+    # add the dictionary during initialization
+
+    return render(request, "service_provider/details.html", context)
 
 def about(request):
     return render(request, 'service_provider/about_page.html')

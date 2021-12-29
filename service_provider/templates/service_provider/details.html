@@ -1,0 +1,40 @@
+{% extends 'service_provider/base.html' %}
+{% block title%} AsaanShadi - Best Shadi Website{% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+{% load static %}
+
+<div class="main">
+
+    <div class="container my-4">
+    <div class="row">
+    <div class="col-md-4">
+        {% for i in data %}
+        <h1> {{ i.company_name }}<br/></h1>
+    <div class="row">
+        <img src="/media/{{i.image}}" width="100px" height="150px">
+    </div>
+
+
+    </div>
+
+    <div class="col-md-8">
+        <h5>Location: {{ i.location }}<br/></h5>
+        <p><b> {{ i.package }}: Rs.{{i.package.price}} </b></p>
+        <p>{{ i.desc }}<br/></p>
+        <p><b> Contact Us: </b> {{ i.contact_no }}<br/></p>
+
+
+    </div>
+    </div>
+        {% endfor %}
+
+
+</div>
+
+
+
+
+</div>
+{% endblock %}

@@ -32,6 +32,14 @@ class ServiceProvider(models.Model):
     def __str__(self):
         return self.company_name
 
+class Become_ServiceProvider(models.Model):
+    owner_name = models.CharField(max_length=255)
+    store_name = models.CharField(max_length=60)
+    tagline = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.OneToOneField(User, related_name='ServiceProvider', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.owner_name
 
 

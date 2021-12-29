@@ -15,8 +15,7 @@
     {% csrf_token %}
     <div class="col">
         <div class="col-lg-6">
-            <label for="User_ID" > <b> User Id: </b></label>
-    <input id="User_ID" type="text" name="{{ form.user_id.html_name }}" value="{{request.user.id}}">
+    <input id="User_ID" type="hidden" name="{{ form.user_id.html_name }}" value="{{request.user.id}}" >
 
 {% if form.user_id.errors %}
 
