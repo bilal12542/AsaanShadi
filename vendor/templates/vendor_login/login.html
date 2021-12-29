@@ -2,7 +2,10 @@
 
 {% block body %}
 <h1 class="title">Log in</h1>
+<div class="control">
+            <a href="{% url 'view-customer-product' %}">Products!</a>
 
+        </div>
 <form method="POST">
     {% csrf_token %}
     <p>

@@ -23,4 +23,7 @@ urlpatterns = [
                   path('become-vendor/', views.become_vendor, name='become-vendor'),
                   path('', views.user_login, name='login'),
                   path('logout/', views.logout_vendor, name='logout'),
+                  path('<slug:category_slug>/<slug:product_slug>/', views.view_customer_product_single,
+                       name='view-customer-product-single'),
+                  path('products/', views.view_customer_product, name='view-customer-product')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

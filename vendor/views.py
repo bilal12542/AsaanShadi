@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.text import slugify
 from .form import AddProduct, ImageForm
@@ -70,7 +71,7 @@ def add_product(request):
                                     form=ImageForm, extra=3)
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = AddProduct(request.POST)
+        form = AddProduct(request.POST, request.FILES)
         formset = ImageSet(request.POST, request.FILES,
                            queryset=Images.objects.none())
         # check whether it's valid:
@@ -80,6 +81,7 @@ def add_product(request):
             post_form = form.save(commit=False)
             post_form.vendor = request.user.vendor
             post_form.slug = slugify(post_form.title)
+            post_form.thumbnail = None
             post_form.save()
             for form in formset.cleaned_data:
                 # this helps to not crash if the user
@@ -106,14 +108,10 @@ def view_product(request):
 
 def single_product(request, category_slug, product_slug):
     product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
-
-    similar_products = list(product.category.products.exclude(id=product.id))
-
-    if len(similar_products) >= 4:
-        similar_products = random.sample(similar_products, 4)
+    images = Images.objects.filter(Q(product_id=product))
 
     return render(request, 'vendor_product/single_product.html',
-                  {'product': product, 'similar_products': similar_products})
+                  {'product': product, 'image': images})
 
 
 def edit_product(request, category_slug, product_slug):
@@ -127,6 +125,8 @@ def edit_product(request, category_slug, product_slug):
         post_form = form.save(commit=False)
         post_form.vendor = request.user.vendor
         post_form.slug = slugify(post_form.title)
+        if post_form.image == '':
+            post_form.thumbnail = None
         post_form.save()
         # redirect to a new URL:
         return redirect("view-product")
@@ -141,3 +141,17 @@ def delete_product(request, category_slug, product_slug):
     product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
     product.delete()
     return redirect('view-product')
+
+
+def view_customer_product_single(request, category_slug, product_slug):
+    product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
+    images = Images.objects.filter(Q(product_id=product))
+    similar_products = list(product.category.products.exclude(id=product.id))
+    if len(similar_products) >= 4:
+        similar_products = random.sample(similar_products, 4)
+    return render(request, 'view_customer_product_single.html',
+                  {'product': product, 'similar_products': similar_products, 'image': images})
+
+def view_customer_product(request):
+    products = Product.objects.all()
+    return render(request, 'view_customer_product.html', {'products': products})

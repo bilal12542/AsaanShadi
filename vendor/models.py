@@ -53,6 +53,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=0)
     date_added = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(max_length=255)
+    image = models.ImageField(upload_to=get_thumbnail_filename, blank=True, null=True)
     thumbnail = models.ImageField(upload_to=get_thumbnail_filename, blank=True, null=True)
 
     def __str__(self):
@@ -70,7 +71,7 @@ class Product(models.Model):
             else:
                 return 'https://via.placeholder.com/240x180.jpg'
 
-    def make_thumbnail(self, image, size=(300, 200)):
+    def make_thumbnail(self, image, size=(240, 180)):
         img = Image.open(image)
         img.convert('RGB')
         img.thumbnail(size)
@@ -87,3 +88,4 @@ class Images(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE, default=None, blank=True, null=True)
     image = models.ImageField(upload_to=get_image_filename,
                               verbose_name='Image')
+
